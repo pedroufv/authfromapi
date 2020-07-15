@@ -61,15 +61,15 @@ class ApiService
     /**
      * @param int $id
      *
-     * @return array
+     * @return object
      * @throws GuzzleException
      */
-    public function getUser(int $id): array
+    public function getUser(int $id): object
     {
         $response = $this->client->get('users/'.$id);
 
         $content = $response->getBody()->getContents();
 
-        return json_decode($content, true);
+        return json_decode($content);
     }
 }
