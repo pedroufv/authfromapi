@@ -2,10 +2,16 @@
 
 namespace App\Facades;
 
-use App\Services\ApiService;
+use App\Services\FromApiService;
 use Illuminate\Support\Facades\Facade;
 
-class Api extends Facade
+/**
+ * Class FromApi
+ * @package App\Facades
+ *
+ * @method static FromApiService getUser(int $id)
+ */
+class FromApi extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -14,6 +20,6 @@ class Api extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return ApiService::class;
+        return FromApiService::class;
     }
 }

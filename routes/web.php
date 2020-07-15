@@ -1,6 +1,6 @@
 <?php
 
-use App\Facades\Api;
+use App\Facades\FromApi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    Auth::attempt(5);
+    $user = FromApi::getUser(5);
 
-//    dd(Auth::user());
+    Auth::loginUsingId($user->id);
 
     return view('welcome');
 });

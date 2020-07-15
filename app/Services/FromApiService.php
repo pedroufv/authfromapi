@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
+use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Config;
 use Psr\Http\Message\ResponseInterface;
 use stdClass;
 
-class ApiService
+class FromApiService
 {
     /**
      * @var Client
@@ -61,15 +62,19 @@ class ApiService
     /**
      * @param int $id
      *
-     * @return object
+     * @return User
      * @throws GuzzleException
      */
     public function getUser(int $id): object
     {
         $response = $this->client->get('users/'.$id);
 
-        $content = $response->getBody()->getContents();
+        $content = json_decode($response->getBody()->getContents());
 
-        return json_decode($content);
+        return User::updateOrCreate(['email' => $content->email], [
+            'name' => $content->name,
+            'email' => $content->email,
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+        ]);
     }
 }
